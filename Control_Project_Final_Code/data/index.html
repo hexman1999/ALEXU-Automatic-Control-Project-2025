@@ -14,9 +14,9 @@
 body {
   background-color: #c1c1f8;
   background-image: url('/background.svg');
-  background-size: auto 70vh;
+  background-size: 300px auto ;
   background-repeat: no-repeat;
-  background-position: center top 10%;
+  background-position: center center;
   background-attachment: fixed;
   margin: 0;
   padding: 20px;
@@ -271,8 +271,9 @@ tr.highlight {
   width: 95%;
   position: relative;
   max-width: 500px;
-  max-height: 90vh;
+  max-height: 80vh;
   overflow-y: auto;
+  overflow-x:hidden;
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
@@ -503,7 +504,7 @@ td.status-cell.interrupted {
     </div>
     <div class="slider-container">
       <label for="kpSlider">Kp (Proportional):</label>
-      <input type="range" id="kpSlider" min="10" max="100" value="35" step="0.5">
+      <input type="range" id="kpSlider" min="10" max="60" value="35" step="0.5">
       <span id="kpValue">35</span>
     </div>
 
@@ -515,11 +516,11 @@ td.status-cell.interrupted {
 
     <div class="slider-container">
       <label for="kdSlider">Kd (Derivative):</label>
-      <input type="range" id="kdSlider" min="0" max="100" value="25" step="0.5">
+      <input type="range" id="kdSlider" min="0" max="60" value="25" step="0.5">
       <span id="kdValue">25</span>
     </div>
 	<div class="slider-container">
-		<label for="turnDelaySlider">Turn Delay (ms):</label>
+		<label for="turnDelaySlider">Reverse Delay (ms):</label>
 		<input type="range" id="turnDelaySlider" min="0" max="1000" value="250" step="10">
 		<span id="turnDelayValue">250</span>
 	</div>
@@ -531,7 +532,7 @@ td.status-cell.interrupted {
 
     <div id="variableInfo" style="display: none; text-align: left; font-size: 14px; background: #f9f9f9; padding: 15px; border-radius: 8px; margin-top: 10px;">
       <strong>Speed (%):</strong> Controls how fast the robot moves. Higher = faster.<br><br>
-	  <strong>Turn Delay (ms):</strong> How long 90 degree turning take (0-500ms).<br><br>
+	  <strong>Reverse Delay (ms):</strong> How long 90 degree reverse take (0-500ms).<br><br>
       <strong>Kp (Proportional):</strong> Responds to current error. High = quicker correction, but may overshoot.<br><br>
       <strong>Ki (Integral):</strong> Fixes cumulative error. High = persistent correction, but may cause drift.<br><br>
       <strong>Kd (Derivative):</strong> Dampens the response. High = smoother control, but may slow reaction.

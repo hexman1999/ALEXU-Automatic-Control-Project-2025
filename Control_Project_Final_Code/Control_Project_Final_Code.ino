@@ -8,7 +8,7 @@
 Preferences preferences;
 
 const int sensorPins[5] = { 19, 18, 21, 17, 16 };                      // leftmost (0) to rightmost (4)
-const int ENA = 33, IN1 = 25, IN2 = 26, ENB = 12, IN3 = 27, IN4 = 14;  // Motor driver (L293D) pins
+const int ENA = 33, IN1 = 25, IN2 = 26, ENB = 12, IN3 = 27, IN4 = 14;  // Motor driver (L298N) pins
 const int BUZZER_PIN = 32, BUTTON_PIN = 13, LED_PIN = 2;               // Additional Pins
 
 float Kp = 35, Ki = 0.05, Kd = 25;  // PID variables( Proportional gain / Integral gain / Derivative gain )
@@ -200,33 +200,22 @@ void turnRightdetection() {
 }
 void turnLeft90() {
   move(STOP);
-  delay(10);
-  // Rotate clockwise for detection
-  while (sensorReadings[3] == LOW && sensorReadings[4] == LOW) {
-    setMotorSpeeds(100, 0);
-    readSensors();
-    if (sensorReadings[3] == HIGH || sensorReadings[4] == HIGH) {
-      break;  // Right sensors detected black
-    }
-    delay(10);  // Small delay to prevent watchdog issues
-  }             // Shorter delay for detection sweep
+  delay(50);  
+    setMotorSpeeds(-130, 130); // Rotate counter-clockwise
+    delay(turnDelay);
+    readSensors();    
   move(STOP);
-  delay(10);
+  delay(50);
 }
+
 void turnRight90() {
-   move(STOP);
-  delay(10);
-  // Rotate counter-clockwise for detection
-  while (sensorReadings[0] == LOW && sensorReadings[1] == LOW) {
-    setMotorSpeeds(0, 100);
-    readSensors();
-    if (sensorReadings[0] == HIGH || sensorReadings[1] == HIGH) {
-      break;  // Right sensors detected black
-    }
-    delay(10);  // Small delay to prevent watchdog issues
-  }
   move(STOP);
-  delay(10);
+  delay(50);  
+    setMotorSpeeds(130, -130); // Rotate clockwise
+    delay(turnDelay);
+    readSensors();  
+  move(STOP);
+  delay(50);
 }
 void updateStopwatch() {
   unsigned long currentMillis = millis();

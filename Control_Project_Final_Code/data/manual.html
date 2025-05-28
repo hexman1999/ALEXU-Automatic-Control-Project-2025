@@ -13,24 +13,24 @@
 /* Base Styles */
 body {
   margin: 0;
+  margin-top: 30px;
   padding-left: 20px;
   padding-right: 20px;
   min-height: 100vh;
-  display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #ffe5e5;
+  background-color: #c1c1f8;
   background-image: url('/background.svg');
-  background-size: auto 70vh;
+  background-size: 300px auto ;
   background-repeat: no-repeat;
-  background-position: center top 10%;
+  background-position: center center;
   background-attachment: fixed;
   font-family: 'Electrolise', Arial, sans-serif;
   overflow: hidden;
 }
 
 .content-container {
-  background-color: rgba(255, 255, 255, 0.92);
+    background-color: rgba(224, 240, 250, 0.85);
   border-radius: 15px;
   padding: 20px;
   max-width: 600px;
@@ -193,7 +193,15 @@ input[type=range] {
   margin-top: 6px;
   font-size: 16px;
 }
-
+@media (max-height: 700px) {
+  .content-container {
+    max-height: 90vh; /* Slightly smaller on very short screens */
+  }
+  
+  body {
+    background-size: 300px auto; /* Slightly smaller background */
+  }
+}
 /* Responsive Adjustments */
 @media (max-width: 600px) {
   button {
