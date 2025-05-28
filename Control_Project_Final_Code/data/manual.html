@@ -1,758 +1,743 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Robot Manual Controller</title>
-<style>
-@font-face {
-  font-family: 'Electrolise';
-  src: url('/Electrolise.ttf') format('truetype');
-}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Robot Manual Controller</title>
+  <style>
+    @font-face {
+      font-family: 'Electrolise';
+      src: url('/Electrolise.ttf') format('truetype');
+    }
 
-/* Base Styles */
-body {
-  margin: 0;
-  margin-top: 30px;
-  padding-left: 20px;
-  padding-right: 20px;
-  min-height: 100vh;
-  justify-content: center;
-  align-items: center;
-  display: flex;
-  background-color: #c1c1f8;
-  background-image: url('/background.svg');
-  background-size: 300px auto ;
-  background-repeat: no-repeat;
-  background-position: center center;
-  background-attachment: fixed;
-  font-family: 'Electrolise', Arial, sans-serif;
-  overflow: hidden;
-}
+    /* Base Styles */
+    body {
+      margin: 20px;
+      min-height: 100vh;
+      place-items: center;
+      background-color: #c1c1f8;
+      background-image: url('/background.svg');
+      background-size: 300px auto;
+      background-repeat: no-repeat;
+      background-position: center center;
+      background-attachment: fixed;
+      font-family: 'Electrolise', Arial, sans-serif;
+      overflow: hidden;
+    }
 
-.content-container {
-    background-color: rgba(224, 240, 250, 0.85);
-  border-radius: 15px;
-  padding: 20px;
-  max-width: 600px;
-  width: 100%;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  box-sizing: border-box;
-  text-align: center;
-}
+    .content-container {
+      background-color: rgba(224, 240, 250, 0.85);
+      border-radius: 15px;
+      padding: 20px;
+      max-width: 600px;
+      width: 100%;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      box-sizing: border-box;
+      text-align: center;
+    }
 
-/* Header Layout */
-.header-container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 15px;
-  position: relative;
-}
+    /* Header Layout */
+    .header-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 15px;
+      position: relative;
+    }
 
-.header-container h2 {
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  margin: 0;
-  width: max-content;
-  font-size: 20px;
-  font-weight: 600;
-  color: #333;
-}
+    .header-container h2 {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      margin: 0;
+      width: max-content;
+      font-size: 20px;
+      font-weight: 600;
+      color: #333;
+    }
 
-.spacer {
-  width: 120px;
-  visibility: hidden;
-}
+    .spacer {
+      width: 120px;
+      visibility: hidden;
+    }
 
-/* Button Styles */
-button {
-  font-size: 36px;
-  font-weight: bold;
-  width: 72px;
-  height: 72px;
-  padding: 10px;
-  border: none;
-  border-radius: 10px;
-  color: white;
-  background: #4CAF50;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
-  transition: background 0.2s ease;
-  cursor: pointer;
-}
+    /* Button Styles */
+    button {
+      font-size: 36px;
+      font-weight: bold;
+      width: 72px;
+      height: 72px;
+      padding: 10px;
+      border: none;
+      border-radius: 10px;
+      color: white;
+      background: #4CAF50;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+      transition: background 0.2s ease;
+      cursor: pointer;
+    }
 
-button:hover {
-  opacity: 0.9;
-}
+    button:hover {
+      opacity: 0.9;
+    }
 
-button.active {
-  background-color: #ff9800;
-  box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.3);
-}
+    button.active {
+      background-color: #ff9800;
+      box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.3);
+    }
 
-/* Directional Controls */
-.controls {
-  display: grid;
-  grid-template-columns: repeat(3, 72px);
-  grid-gap: 10px;
-  justify-content: center;
-  align-items: center;
-  margin: 10px 0;
-}
+    /* Directional Controls */
+    .controls {
+      display: grid;
+      grid-template-columns: repeat(3, 72px);
+      grid-gap: 10px;
+      justify-content: center;
+      align-items: center;
+      margin: 10px 0;
+    }
 
-.rotation-controls {
-  display: flex;
-  justify-content: center;
-  gap: 15px;
-  margin-bottom: 10px;
-}
+    .rotation-controls {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-bottom: 10px;
+    }
 
-/* Mode Switch Button */
-.mode-switch-button {
-  background: #2196F3;
-  font-size: 14px;
-  width: 80px;
-  height: 80px;
-  padding: 8px;
-  border-radius: 10px;
-  color: white;
-  border: none;
-  cursor: pointer;
-  transition: background 0.2s ease;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  text-align: center;
-}
+    /* Mode Switch Button */
+    .mode-switch-button {
+      background: #2196F3;
+      font-size: 14px;
+      width: 80px;
+      height: 80px;
+      padding: 8px;
+      border-radius: 10px;
+      color: white;
+      border: none;
+      cursor: pointer;
+      transition: background 0.2s ease;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      text-align: center;
+    }
 
-.mode-switch-button:hover {
-  background: #1976D2;
-}
+    .mode-switch-button:hover {
+      background: #1976D2;
+    }
 
-/* 90° Turn Control */
-.turn-90-control {
-  background: rgba(0, 0, 0, 0.05);
-  padding: 10px;
-  border-radius: 8px;
-  margin: 0 auto 15px auto;
-  width: fit-content;
-  transition: all 0.3s;
-}
+    /* 90° Turn Control */
+    .turn-90-control {
+      background: rgba(0, 0, 0, 0.05);
+      padding: 10px;
+      border-radius: 8px;
+      margin: 0 auto 15px auto;
+      width: fit-content;
+      transition: all 0.3s;
+    }
 
-.turn-90-control.active {
-  background: rgba(0, 150, 255, 0.15);
-  border-left: 4px solid #2196F3;
-}
+    .turn-90-control.active {
+      background: rgba(0, 150, 255, 0.15);
+      border-left: 4px solid #2196F3;
+    }
 
-.turn-90-control label {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  cursor: pointer;
-}
+    .turn-90-control label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+    }
 
-.turn-90-control input[type="checkbox"] {
-  width: 18px;
-  height: 18px;
-  cursor: pointer;
-}
+    .turn-90-control input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      cursor: pointer;
+    }
 
-/* Horn Button */
-.horn-control {
-  margin: 20px 0;
-}
+    /* Horn Button */
+    .horn-control {
+      margin: 20px 0;
+    }
 
-.horn-control button {
-  width: 200px;
-  height: auto;
-  padding: 15px;
-  font-size: 20px;
-  background: #ff9800;
-}
+    .horn-control button {
+      width: 200px;
+      height: auto;
+      padding: 15px;
+      font-size: 20px;
+      background: #ff9800;
+    }
 
-.horn-control button:hover {
-  background: #e68a00;
-}
+    .horn-control button:hover {
+      background: #e68a00;
+    }
 
-.horn-control button.active {
-  background: #f44336;
-}
+    .horn-control button.active {
+      background: #f44336;
+    }
 
-/* Speed Slider */
-#sliderContainer {
-  margin-top: 10px;
-}
+    /* Speed Slider */
+    #sliderContainer {
+      margin-top: 10px;
+    }
 
-input[type=range] {
-  width: 90%;
-  max-width: 260px;
-}
+    input[type=range] {
+      width: 90%;
+      max-width: 260px;
+    }
 
-#sliderValue {
-  margin-top: 6px;
-  font-size: 16px;
-}
-@media (max-height: 700px) {
-  .content-container {
-    max-height: 90vh; /* Slightly smaller on very short screens */
-  }
-  
-  body {
-    background-size: 300px auto; /* Slightly smaller background */
-  }
-}
-/* Responsive Adjustments */
-@media (max-width: 600px) {
-  button {
-    width: 64px;
-    height: 64px;
-    font-size: 32px;
-  }
+    #sliderValue {
+      margin-top: 6px;
+      font-size: 16px;
+    }
 
-  .controls {
-    grid-template-columns: repeat(3, 64px);
-    grid-gap: 8px;
-  }
+    @media (max-height: 700px) {
+      .content-container {
+        max-height: 90vh;
+        /* Slightly smaller on very short screens */
+      }
 
-  .rotation-controls {
-    gap: 8px;
-  }
-}
-</style>
+      body {
+        background-size: 300px auto;
+        /* Slightly smaller background */
+      }
+    }
+
+    /* Responsive Adjustments */
+    @media (max-width: 600px) {
+      button {
+        width: 64px;
+        height: 64px;
+        font-size: 32px;
+      }
+
+      .controls {
+        grid-template-columns: repeat(3, 64px);
+        grid-gap: 8px;
+      }
+
+      .rotation-controls {
+        gap: 8px;
+      }
+    }
+  </style>
 </head>
+
 <body onload="initializePage()">
   <div class="content-container">
     <div class="header-container">
       <button class="mode-switch-button" onclick="setAutoMode()">
-      Auto  <br>Mode 🚗
+        🚗<br>Auto<br>Mode
       </button>
-      <h2>🕹️ Manual Control</h2>
+      <h2>Manual Control<br>🕹️</h2>
       <div class="spacer"></div> <!-- This balances the layout -->
     </div>
-  <div class="controls">
-    <div></div>
-    <button id="forward">▲</button>
-    <div></div>
+    <div class="controls">
+      <div></div>
+      <button id="forward">▲</button>
+      <div></div>
 
-    <button id="left" 
-            onmousedown="handleButtonPress('left', true)" 
-            onmouseup="handleButtonPress('left', false)"
-            onmouseleave="handleButtonPress('left', false)"
-            ontouchstart="touchMove(event, 'left')" 
-            ontouchend="touchMove(event, 'left')">◄</button>
-    <div></div>
-    <button id="right" 
-            onmousedown="handleButtonPress('right', true)" 
-            onmouseup="handleButtonPress('right', false)"
-            onmouseleave="handleButtonPress('right', false)"
-            ontouchstart="touchMove(event, 'right')" 
-            ontouchend="touchMove(event, 'right')">►</button>
+      <button id="left" onmousedown="handleButtonPress('left', true)" onmouseup="handleButtonPress('left', false)"
+        onmouseleave="handleButtonPress('left', false)" ontouchstart="touchMove(event, 'left')"
+        ontouchend="touchMove(event, 'left')">◄</button>
+      <div></div>
+      <button id="right" onmousedown="handleButtonPress('right', true)" onmouseup="handleButtonPress('right', false)"
+        onmouseleave="handleButtonPress('right', false)" ontouchstart="touchMove(event, 'right')"
+        ontouchend="touchMove(event, 'right')">►</button>
 
-    <div></div>
-    <button id="backward" 
-            onmousedown="handleButtonPress('backward', true)" 
-            onmouseup="handleButtonPress('backward', false)"
-            onmouseleave="handleButtonPress('backward', false)"
-            ontouchstart="touchMove(event, 'backward')" 
-            ontouchend="touchMove(event, 'backward')">▼</button>
-    <div></div>
+      <div></div>
+      <button id="backward" onmousedown="handleButtonPress('backward', true)"
+        onmouseup="handleButtonPress('backward', false)" onmouseleave="handleButtonPress('backward', false)"
+        ontouchstart="touchMove(event, 'backward')" ontouchend="touchMove(event, 'backward')">▼</button>
+      <div></div>
+    </div>
+
+    <div class="rotation-controls">
+      <button id="ccw" onmousedown="handleButtonPress('ccw', true)" onmouseup="handleButtonPress('ccw', false)"
+        ontouchstart="handleTouchRotation('ccw', true)" ontouchend="handleTouchRotation('ccw', false)">↺</button>
+
+      <button id="cw" onmousedown="handleButtonPress('cw', true)" onmouseup="handleButtonPress('cw', false)"
+        ontouchstart="handleTouchRotation('cw', true)" ontouchend="handleTouchRotation('cw', false)">↻</button>
+    </div>
+
+    <div class="turn-90-control" id="turn90Control">
+      <label>
+        <input type="checkbox" id="enable90Turn" checked onchange="toggle90TurnMode()">
+        <span id="turnModeText">90° Turn</span>
+      </label>
+    </div>
+    <div class="horn-control">
+      <button id="horn" onmousedown="activateHorn()" onmouseup="deactivateHorn()" ontouchstart="touchHorn(event, true)"
+        ontouchend="touchHorn(event, false)">
+        🔊 Horn
+      </button>
+    </div>
+
+    <div id="sliderContainer">
+      <input type="range" id="speedSlider" min="30" max="100" value="50" oninput="updateSlider()"
+        onkeydown="event.preventDefault()">
+      <div id="sliderValue">Speed: 50%</div>
+    </div>
   </div>
 
- <div class="rotation-controls">
-  <button id="ccw" 
-          onmousedown="handleButtonPress('ccw', true)" 
-          onmouseup="handleButtonPress('ccw', false)"
-          ontouchstart="handleTouchRotation('ccw', true)" 
-          ontouchend="handleTouchRotation('ccw', false)">↺</button>
-          
-  <button id="cw" 
-          onmousedown="handleButtonPress('cw', true)" 
-          onmouseup="handleButtonPress('cw', false)"
-          ontouchstart="handleTouchRotation('cw', true)" 
-          ontouchend="handleTouchRotation('cw', false)">↻</button>
-</div>
-
-<div class="turn-90-control" id="turn90Control">
-  <label>
-    <input type="checkbox" id="enable90Turn" checked onchange="toggle90TurnMode()">
-    <span id="turnModeText">90° Turn</span>
-  </label>
-</div>
-  <div class="horn-control">
-    <button id="horn" 
-            onmousedown="activateHorn()" 
-            onmouseup="deactivateHorn()"
-            ontouchstart="touchHorn(event, true)" 
-            ontouchend="touchHorn(event, false)">
-      🔊 Horn
-    </button>
-  </div>
-
-  <div id="sliderContainer">
-    <input type="range" id="speedSlider" min="30" max="100" value="50" oninput="updateSlider()" onkeydown="event.preventDefault()">
-    <div id="sliderValue">Speed: 50%</div>
-  </div>
-</div>
-
-<script>
-let use90DegreeTurns = false;
-let activeButtons = new Set();
-let keyboardActiveButtons = new Set();
-let touchActiveButtons = new Set();
-let hornActive = false;
-let rotationInProgress = false;
-let currentMode = "manual";
-const touchPoints = new Map(); // Track active touch points and their directions
+  <script>
+    let use90DegreeTurns = false;
+    let activeButtons = new Set();
+    let keyboardActiveButtons = new Set();
+    let touchActiveButtons = new Set();
+    let hornActive = false;
+    let rotationInProgress = false;
+    let currentMode = "manual";
+    const touchPoints = new Map(); // Track active touch points and their directions
 
 
 
-async function handleRotation(direction, isPressed) {
-  const button = document.getElementById(direction);
-  
-  if (!isPressed) {
-    // Button released - stop if in continuous mode
-    if (!use90DegreeTurns) {
-      await fetch('/stop');
-    }
-    button.classList.remove('active');
-    rotationActive = false;
-    return;
-  }
+    async function handleRotation(direction, isPressed) {
+      const button = document.getElementById(direction);
 
-  // Button pressed
-  button.classList.add('active');
-  
-  if (use90DegreeTurns) {
-    // 90° turn mode - execute once
-    const endpoint = direction === 'cw' ? '/turnRight90' : '/turnLeft90';
-    await fetch(endpoint);
-    console.log(`Executed 90° turn (${direction})`);
-  } else {
-    // Continuous rotation mode
-    const endpoint = direction === 'cw' ? '/cw' : '/ccw';
-    rotationActive = true;
-    while (rotationActive && !use90DegreeTurns) {
-      await fetch(endpoint);
-      await new Promise(r => setTimeout(r, 100)); // Small delay between commands
-    }
-  }
-}
-function handleTouchStart(event, direction) {
-  event.preventDefault();
-  // Assign this touch to the direction
-  Array.from(event.changedTouches).forEach(touch => {
-    touchPoints.set(touch.identifier, direction);
-    activeButtons.add(direction);
-  });
-  handleMovement();
-}
-function handleTouchEnd(event) {
-  event.preventDefault();
-  // Remove all ended touches from tracking
-  Array.from(event.changedTouches).forEach(touch => {
-    const direction = touchPoints.get(touch.identifier);
-    if (direction) {
-      activeButtons.delete(direction);
-      activeButtons.delete('_90turnExecuted');
-      touchPoints.delete(touch.identifier);
-    }
-  });
-  handleMovement();
-}
-
-function handleTouchRotation(direction, isPressed) {
-  if (isPressed) {
-    touchActiveButtons.add(direction);
-  } else {
-    touchActiveButtons.delete(direction);
-    touchActiveButtons.delete('_90turnExecuted');
-  }
-  handleMovement();
-}
-function startSpeedSync() {
-  // Clear existing interval if any
-  if (speedSyncInterval) clearInterval(speedSyncInterval);
-  
-  // Sync speed every 2 seconds
-  speedSyncInterval = setInterval(() => {
-    fetch("/status")
-      .then(response => response.json())
-      .then(data => {
-        if (data.speed) {
-          const newSpeed = parseInt(data.speed);
-          // Update slider only if different
-          if (parseInt(document.getElementById("speedSlider").value) !== newSpeed) {
-            document.getElementById("speedSlider").value = newSpeed;
-            document.getElementById("sliderValue").innerText = `Speed: ${newSpeed}%`;
-          }
+      if (!isPressed) {
+        // Button released - stop if in continuous mode
+        if (!use90DegreeTurns) {
+          await fetch('/stop');
         }
-      })
-      .catch(console.error);
-  }, 2000);
-}
-function handleButtonPress(direction, isPressed) {
-  if (direction === 'cw' || direction === 'ccw') {
-    handleRotation(direction, isPressed);
-  } else {
-    // Handle other movements (forward/backward/left/right)
-    const button = document.getElementById(direction);
-    if (isPressed) {
+        button.classList.remove('active');
+        rotationActive = false;
+        return;
+      }
+
+      // Button pressed
       button.classList.add('active');
-      fetch(`/${direction}`).catch(console.error);
-    } else {
-      button.classList.remove('active');
-      fetch('/stop').catch(console.error);
-    }
-  }
-}
 
-
-function initializePage() {
-  // Replace loadSpeedFromStorage() with:
-  const storedSpeed = localStorage.getItem("speedValue") || 50;
-  document.getElementById("speedSlider").value = storedSpeed;
-  document.getElementById("sliderValue").innerText = `Speed: ${storedSpeed}%`;
-  
-  // Rest of your existing initialization code...
-  setManualMode();
-  const favicon = document.createElement('link');
-  favicon.rel = 'icon';
-  fetch('/icon.png')
-    .then(r => favicon.href = r.ok ? '/icon.png' :
-      'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y=".9em" font-size="90">🤖</text></svg>')
-    .catch(() => favicon.href =
-      'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y=".9em" font-size="90">🤖</text></svg>');
-  document.head.appendChild(favicon);
-  setupButton('forward', 'forward');
-  setupButton('backward', 'backward');
-  setupButton('left', 'left');
-  setupButton('right', 'right');
-  setupButton('cw', 'cw');
-  setupButton('ccw', 'ccw');
-  
-
-  
-  // Initialize checkbox
-  document.getElementById("enable90Turn").checked = use90DegreeTurns;
-  fetch("/syncmode?mode=manual").catch(console.error);
-  document.addEventListener('keydown', handleKeyDown);
-  document.addEventListener('keyup', handleKeyUp);
-    fetch("/status")
-    .then(response => response.json())
-    .then(data => {
-      if (data.speed) {
-        const speed = parseInt(data.speed);
-        document.getElementById("speedSlider").value = speed;
-        document.getElementById("sliderValue").innerText = `Speed: ${speed}%`;
-        localStorage.setItem("speedValue", speed);
-      }
-    })
-    .catch(console.error);
-    
-  startSpeedSync();
-
-}
-
-function toggle90TurnMode() {
-  use90DegreeTurns = document.getElementById("enable90Turn").checked;
-  const controlDiv = document.getElementById("turn90Control");
-  controlDiv.classList.toggle('active', use90DegreeTurns);
-  
-  // Stop any current rotation
-  fetch('/stop').catch(console.error);
-  activeButtons.delete('cw');
-  activeButtons.delete('ccw');
-  activeButtons.delete('_90turnExecuted');
-  keyboardActiveButtons.delete('cw');
-  keyboardActiveButtons.delete('ccw');
-  keyboardActiveButtons.delete('_90turnExecuted');
-  
-  updateButtonAppearance();
-}
-
-
-
-
-
-function determineAndExecuteMovement() {
-  // Don't process new commands if a 90° turn is already in progress
-  if (rotationInProgress && use90DegreeTurns) return;
-  
-  const allActive = new Set([...activeButtons, ...keyboardActiveButtons]);
-  let movementToExecute = 'stop';
-  
-  // Handle rotation first (highest priority)
-  if (allActive.has('cw') || allActive.has('ccw')) {
-    if (use90DegreeTurns) {
-      movementToExecute = allActive.has('cw') ? 'turnRight90' : 'turnLeft90';
-      rotationInProgress = true;
-      
-      // Reset after reasonable time (adjust 800ms as needed)
-      setTimeout(() => {
-        rotationInProgress = false;
-        updateButtonAppearance();
-      }, 800);
-    } else {
-      // Continuous rotation
-      movementToExecute = allActive.has('cw') ? 'cw' : 'ccw';
-    }
-  } 
-  // Then handle strafing
-  else if (allActive.has('left') || allActive.has('right')) {
-    movementToExecute = allActive.has('left') ? 'left' : 'right';
-  }
-  // Then handle forward/backward
-  else if (allActive.has('forward') || allActive.has('backward')) {
-    movementToExecute = allActive.has('forward') ? 'forward' : 'backward';
-  }
-
-  // Execute the movement
-  const endpoints = {
-    forward: "/forward", backward: "/backward",
-    left: "/left", right: "/right",
-    cw: "/cw", ccw: "/ccw",
-    turnRight90: "/turnRight90", turnLeft90: "/turnLeft90",
-    stop: "/stop"
-  };
-  
-  if (endpoints[movementToExecute]) {
-    console.log(`Executing: ${movementToExecute}`);
-    fetch(endpoints[movementToExecute])
-      .then(() => console.log(`${movementToExecute} command sent`))
-      .catch(err => console.error("Movement error:", err));
-  }
-
-  updateButtonAppearance();
-}
-function setupButton(buttonId, direction) {
-  const btn = document.getElementById(buttonId);
-  if (!btn) return;
-  
-  btn.onmousedown = () => handleButtonPress(direction, true);
-  btn.onmouseup = () => handleButtonPress(direction, false);
-  btn.onmouseleave = () => handleButtonPress(direction, false);
-  btn.ontouchstart = (e) => handleTouchStart(e, direction);
-  btn.ontouchend = (e) => handleTouchEnd(e);
-}
-
-
-
-
-function setManualMode() {
-  if (currentMode !== "manual") {
-    fetch("/setmanual").then(() => currentMode = "manual").catch(console.error);
-  }
-}
-
-function setAutoMode() {
-  // Stop all movements before switching
-  fetch("/stop")
-    .then(() => {
-      return fetch("/syncmode?mode=auto");
-    })
-    .then(() => {
-      window.location.href = "/";
-    })
-    .catch(error => {
-      console.error("Error switching to auto mode:", error);
-    });
-}
-
-
-
-function touchMove(event, direction) {
-  event.preventDefault();
-  // For touch, we treat touchstart as press and touchend as release
-  handleButtonPress(direction, event.type === 'touchstart');
-}
-
-function handleMovement() {
-  const allActive = new Set([...activeButtons, ...keyboardActiveButtons, ...touchActiveButtons]);
-  let movementToExecute = 'stop';
-
-  // Handle rotation
-  if (allActive.has('cw') || allActive.has('ccw')) {
-    if (use90DegreeTurns && !allActive.has('_90turnExecuted')) {
-      movementToExecute = allActive.has('cw') ? 'turnRight90' : 'turnLeft90';
-      allActive.add('_90turnExecuted');
-    } else if (!use90DegreeTurns) {
-      movementToExecute = allActive.has('cw') ? 'cw' : 'ccw';
-    }
-  } 
-  // Handle other movements
-  else if (allActive.has('left') || allActive.has('right')) {
-    movementToExecute = allActive.has('left') ? 'left' : 'right';
-  }
-  else if (allActive.has('forward') || allActive.has('backward')) {
-    movementToExecute = allActive.has('forward') ? 'forward' : 'backward';
-  }
-
-  // Execute movement
-  const endpoints = {
-    forward: "/forward", backward: "/backward",
-    left: "/left", right: "/right",
-    cw: "/cw", ccw: "/ccw",
-    turnRight90: "/turnRight90", turnLeft90: "/turnLeft90",
-    stop: "/stop"
-  };
-
-  if (endpoints[movementToExecute]) {
-    fetch(endpoints[movementToExecute]).catch(console.error);
-  }
-
-  updateButtonAppearance();
-}
-
-
-function updateButtonAppearance() {
-  // Clear all active states
-  document.querySelectorAll('button').forEach(btn => btn.classList.remove('active'));
-  
-  // Set active state for all currently pressed buttons
-  const allActive = new Set([...activeButtons, ...keyboardActiveButtons]);
-  allActive.forEach(dir => {
-    const btn = document.getElementById(dir);
-    if (btn) btn.classList.add('active');
-  });
-  
-  if (hornActive) {
-    document.getElementById("horn").classList.add('active');
-  }
-}
-
-function handleKeyDown(event) {
-  if (event.repeat) return;
-  
-  const map = {
-    'ArrowUp': 'forward',
-    'ArrowDown': 'backward',
-    'ArrowLeft': 'left', 
-    'ArrowRight': 'right',
-    'a': 'ccw', 'A': 'ccw',
-    'd': 'cw', 'D': 'cw',
-    'h': 'horn', 'H': 'horn',
-    '+': 'increaseSpeed', '=': 'increaseSpeed',
-    '-': 'decreaseSpeed'
-  };
-  
-  // Prevent default for arrow keys to stop slider movement
-  if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(event.key)) {
-    event.preventDefault();
-  }
-  
-  if (map[event.key]) {
-    if (event.key.toLowerCase() === 'h') {
-      activateHorn();
-    } else if (event.key === '+' || event.key === '=' || event.key === '-') {
-      // Handle speed adjustment
-      if (event.key === '+' || event.key === '=') {
-        adjustSpeed(5);
+      if (use90DegreeTurns) {
+        // 90° turn mode - execute once
+        const endpoint = direction === 'cw' ? '/turnRight90' : '/turnLeft90';
+        await fetch(endpoint);
+        console.log(`Executed 90° turn (${direction})`);
       } else {
-        adjustSpeed(-5);
+        // Continuous rotation mode
+        const endpoint = direction === 'cw' ? '/cw' : '/ccw';
+        rotationActive = true;
+        while (rotationActive && !use90DegreeTurns) {
+          await fetch(endpoint);
+          await new Promise(r => setTimeout(r, 100)); // Small delay between commands
+        }
       }
-      event.preventDefault(); // Prevent any default behavior for these keys
-    } else {
-      keyboardActiveButtons.add(map[event.key]);
-      handleMovement();
     }
-  }
-}
-
-function handleKeyUp(event) {
-  const map = {
-    'ArrowUp': 'forward',
-    'ArrowDown': 'backward', 
-    'ArrowLeft': 'left',
-    'ArrowRight': 'right',
-    'a': 'ccw', 'A': 'ccw',
-    'd': 'cw', 'D': 'cw',
-    'h': 'horn', 'H': 'horn'
-  };
-  
-  if (map[event.key]) {
-    if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(event.key)) {
+    function handleTouchStart(event, direction) {
       event.preventDefault();
-    }
-    
-    if (event.key.toLowerCase() === 'h') {
-      deactivateHorn();  // Add this line to handle horn release
-    } else {
-      keyboardActiveButtons.delete(map[event.key]);
-      keyboardActiveButtons.delete('_90turnExecuted');
+      // Assign this touch to the direction
+      Array.from(event.changedTouches).forEach(touch => {
+        touchPoints.set(touch.identifier, direction);
+        activeButtons.add(direction);
+      });
       handleMovement();
     }
-  }
-}
+    function handleTouchEnd(event) {
+      event.preventDefault();
+      // Remove all ended touches from tracking
+      Array.from(event.changedTouches).forEach(touch => {
+        const direction = touchPoints.get(touch.identifier);
+        if (direction) {
+          activeButtons.delete(direction);
+          activeButtons.delete('_90turnExecuted');
+          touchPoints.delete(touch.identifier);
+        }
+      });
+      handleMovement();
+    }
+
+    function handleTouchRotation(direction, isPressed) {
+      if (isPressed) {
+        touchActiveButtons.add(direction);
+      } else {
+        touchActiveButtons.delete(direction);
+        touchActiveButtons.delete('_90turnExecuted');
+      }
+      handleMovement();
+    }
+    function startSpeedSync() {
+      // Clear existing interval if any
+      if (speedSyncInterval) clearInterval(speedSyncInterval);
+
+      // Sync speed every 2 seconds
+      speedSyncInterval = setInterval(() => {
+        fetch("/status")
+          .then(response => response.json())
+          .then(data => {
+            if (data.speed) {
+              const newSpeed = parseInt(data.speed);
+              // Update slider only if different
+              if (parseInt(document.getElementById("speedSlider").value) !== newSpeed) {
+                document.getElementById("speedSlider").value = newSpeed;
+                document.getElementById("sliderValue").innerText = `Speed: ${newSpeed}%`;
+              }
+            }
+          })
+          .catch(console.error);
+      }, 2000);
+    }
+    function handleButtonPress(direction, isPressed) {
+      if (direction === 'cw' || direction === 'ccw') {
+        handleRotation(direction, isPressed);
+      } else {
+        // Handle other movements (forward/backward/left/right)
+        const button = document.getElementById(direction);
+        if (isPressed) {
+          button.classList.add('active');
+          fetch(`/${direction}`).catch(console.error);
+        } else {
+          button.classList.remove('active');
+          fetch('/stop').catch(console.error);
+        }
+      }
+    }
 
 
-function adjustSpeed(change) {
-  const slider = document.getElementById("speedSlider");
-  let newValue = parseInt(slider.value) + change;
-  newValue = Math.max(parseInt(slider.min), Math.min(parseInt(slider.max), newValue));
-  slider.value = newValue;
-  updateSlider();
-  sendSpeed();
-}
+    function initializePage() {
+      // Replace loadSpeedFromStorage() with:
+      const storedSpeed = localStorage.getItem("speedValue") || 50;
+      document.getElementById("speedSlider").value = storedSpeed;
+      document.getElementById("sliderValue").innerText = `Speed: ${storedSpeed}%`;
 
-function updateSlider() {
-  const slider = document.getElementById("speedSlider");
-  const val = slider.value;
-  document.getElementById("sliderValue").innerText = `Speed: ${val}%`;
-  localStorage.setItem("speedValue", val);
-  sendSpeed(); // Call sendSpeed immediately on change
-}
-
-
-function sendSpeed() {
-  const val = parseInt(document.getElementById("speedSlider").value);
-  fetch(`/setpid?speed=${val}`)
-    .then(response => {
-      if (!response.ok) throw new Error("Network response was not ok");
-      console.log("Speed updated successfully");
-    })
-    .catch(error => {
-      console.error("Error updating speed:", error);
-      document.getElementById("sliderValue").style.color = "red";
-      setTimeout(() => {
-        document.getElementById("sliderValue").style.color = "";
-      }, 1000);
-    });
-}
+      // Rest of your existing initialization code...
+      setManualMode();
+      const favicon = document.createElement('link');
+      favicon.rel = 'icon';
+      fetch('/icon.png')
+        .then(r => favicon.href = r.ok ? '/icon.png' :
+          'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y=".9em" font-size="90">🤖</text></svg>')
+        .catch(() => favicon.href =
+          'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y=".9em" font-size="90">🤖</text></svg>');
+      document.head.appendChild(favicon);
+      setupButton('forward', 'forward');
+      setupButton('backward', 'backward');
+      setupButton('left', 'left');
+      setupButton('right', 'right');
+      setupButton('cw', 'cw');
+      setupButton('ccw', 'ccw');
 
 
-function activateHorn() {
-  hornActive = true;
-  activeButtons.add('horn');
-  fetch("/horn?state=on").catch(console.error);
-  updateButtonAppearance();
-}
 
-function deactivateHorn() {
-  hornActive = false;
-  activeButtons.delete('horn');
-  fetch("/horn?state=off").catch(console.error);
-  updateButtonAppearance();
-}
+      // Initialize checkbox
+      document.getElementById("enable90Turn").checked = use90DegreeTurns;
+      fetch("/syncmode?mode=manual").catch(console.error);
+      document.addEventListener('keydown', handleKeyDown);
+      document.addEventListener('keyup', handleKeyUp);
+      fetch("/status")
+        .then(response => response.json())
+        .then(data => {
+          if (data.speed) {
+            const speed = parseInt(data.speed);
+            document.getElementById("speedSlider").value = speed;
+            document.getElementById("sliderValue").innerText = `Speed: ${speed}%`;
+            localStorage.setItem("speedValue", speed);
+          }
+        })
+        .catch(console.error);
 
-function touchHorn(event, state) {
-  event.preventDefault();
-  if (state) {
-    activateHorn();
-  } else {
-    deactivateHorn();
-  }
-}
+      startSpeedSync();
 
-function loadSpeedFromStorage() {
-  const stored = localStorage.getItem("speedValue");
-  if (stored) {
-    const slider = document.getElementById("speedSlider");
-    slider.value = stored;
-    document.getElementById("sliderValue").innerText = `Speed: ${stored}%`;
-  }
-}
-</script>
+    }
+
+    function toggle90TurnMode() {
+      use90DegreeTurns = document.getElementById("enable90Turn").checked;
+      const controlDiv = document.getElementById("turn90Control");
+      controlDiv.classList.toggle('active', use90DegreeTurns);
+
+      // Stop any current rotation
+      fetch('/stop').catch(console.error);
+      activeButtons.delete('cw');
+      activeButtons.delete('ccw');
+      activeButtons.delete('_90turnExecuted');
+      keyboardActiveButtons.delete('cw');
+      keyboardActiveButtons.delete('ccw');
+      keyboardActiveButtons.delete('_90turnExecuted');
+
+      updateButtonAppearance();
+    }
+
+
+
+
+
+    function determineAndExecuteMovement() {
+      // Don't process new commands if a 90° turn is already in progress
+      if (rotationInProgress && use90DegreeTurns) return;
+
+      const allActive = new Set([...activeButtons, ...keyboardActiveButtons]);
+      let movementToExecute = 'stop';
+
+      // Handle rotation first (highest priority)
+      if (allActive.has('cw') || allActive.has('ccw')) {
+        if (use90DegreeTurns) {
+          movementToExecute = allActive.has('cw') ? 'turnRight90' : 'turnLeft90';
+          rotationInProgress = true;
+
+          // Reset after reasonable time (adjust 800ms as needed)
+          setTimeout(() => {
+            rotationInProgress = false;
+            updateButtonAppearance();
+          }, 800);
+        } else {
+          // Continuous rotation
+          movementToExecute = allActive.has('cw') ? 'cw' : 'ccw';
+        }
+      }
+      // Then handle strafing
+      else if (allActive.has('left') || allActive.has('right')) {
+        movementToExecute = allActive.has('left') ? 'left' : 'right';
+      }
+      // Then handle forward/backward
+      else if (allActive.has('forward') || allActive.has('backward')) {
+        movementToExecute = allActive.has('forward') ? 'forward' : 'backward';
+      }
+
+      // Execute the movement
+      const endpoints = {
+        forward: "/forward", backward: "/backward",
+        left: "/left", right: "/right",
+        cw: "/cw", ccw: "/ccw",
+        turnRight90: "/turnRight90", turnLeft90: "/turnLeft90",
+        stop: "/stop"
+      };
+
+      if (endpoints[movementToExecute]) {
+        console.log(`Executing: ${movementToExecute}`);
+        fetch(endpoints[movementToExecute])
+          .then(() => console.log(`${movementToExecute} command sent`))
+          .catch(err => console.error("Movement error:", err));
+      }
+
+      updateButtonAppearance();
+    }
+    function setupButton(buttonId, direction) {
+      const btn = document.getElementById(buttonId);
+      if (!btn) return;
+
+      btn.onmousedown = () => handleButtonPress(direction, true);
+      btn.onmouseup = () => handleButtonPress(direction, false);
+      btn.onmouseleave = () => handleButtonPress(direction, false);
+      btn.ontouchstart = (e) => handleTouchStart(e, direction);
+      btn.ontouchend = (e) => handleTouchEnd(e);
+    }
+
+
+
+
+    function setManualMode() {
+      if (currentMode !== "manual") {
+        fetch("/setmanual").then(() => currentMode = "manual").catch(console.error);
+      }
+    }
+
+    function setAutoMode() {
+      // Stop all movements before switching
+      fetch("/stop")
+        .then(() => {
+          return fetch("/syncmode?mode=auto");
+        })
+        .then(() => {
+          window.location.href = "/";
+        })
+        .catch(error => {
+          console.error("Error switching to auto mode:", error);
+        });
+    }
+
+
+
+    function touchMove(event, direction) {
+      event.preventDefault();
+      // For touch, we treat touchstart as press and touchend as release
+      handleButtonPress(direction, event.type === 'touchstart');
+    }
+
+    function handleMovement() {
+      const allActive = new Set([...activeButtons, ...keyboardActiveButtons, ...touchActiveButtons]);
+      let movementToExecute = 'stop';
+
+      // Handle rotation
+      if (allActive.has('cw') || allActive.has('ccw')) {
+        if (use90DegreeTurns && !allActive.has('_90turnExecuted')) {
+          movementToExecute = allActive.has('cw') ? 'turnRight90' : 'turnLeft90';
+          allActive.add('_90turnExecuted');
+        } else if (!use90DegreeTurns) {
+          movementToExecute = allActive.has('cw') ? 'cw' : 'ccw';
+        }
+      }
+      // Handle other movements
+      else if (allActive.has('left') || allActive.has('right')) {
+        movementToExecute = allActive.has('left') ? 'left' : 'right';
+      }
+      else if (allActive.has('forward') || allActive.has('backward')) {
+        movementToExecute = allActive.has('forward') ? 'forward' : 'backward';
+      }
+
+      // Execute movement
+      const endpoints = {
+        forward: "/forward", backward: "/backward",
+        left: "/left", right: "/right",
+        cw: "/cw", ccw: "/ccw",
+        turnRight90: "/turnRight90", turnLeft90: "/turnLeft90",
+        stop: "/stop"
+      };
+
+      if (endpoints[movementToExecute]) {
+        fetch(endpoints[movementToExecute]).catch(console.error);
+      }
+
+      updateButtonAppearance();
+    }
+
+
+    function updateButtonAppearance() {
+      // Clear all active states
+      document.querySelectorAll('button').forEach(btn => btn.classList.remove('active'));
+
+      // Set active state for all currently pressed buttons
+      const allActive = new Set([...activeButtons, ...keyboardActiveButtons]);
+      allActive.forEach(dir => {
+        const btn = document.getElementById(dir);
+        if (btn) btn.classList.add('active');
+      });
+
+      if (hornActive) {
+        document.getElementById("horn").classList.add('active');
+      }
+    }
+
+    function handleKeyDown(event) {
+      if (event.repeat) return;
+
+      const map = {
+        'ArrowUp': 'forward',
+        'ArrowDown': 'backward',
+        'ArrowLeft': 'left',
+        'ArrowRight': 'right',
+        'a': 'ccw', 'A': 'ccw',
+        'd': 'cw', 'D': 'cw',
+        'h': 'horn', 'H': 'horn',
+        '+': 'increaseSpeed', '=': 'increaseSpeed',
+        '-': 'decreaseSpeed'
+      };
+
+      // Prevent default for arrow keys to stop slider movement
+      if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(event.key)) {
+        event.preventDefault();
+      }
+
+      if (map[event.key]) {
+        if (event.key.toLowerCase() === 'h') {
+          activateHorn();
+        } else if (event.key === '+' || event.key === '=' || event.key === '-') {
+          // Handle speed adjustment
+          if (event.key === '+' || event.key === '=') {
+            adjustSpeed(5);
+          } else {
+            adjustSpeed(-5);
+          }
+          event.preventDefault(); // Prevent any default behavior for these keys
+        } else {
+          keyboardActiveButtons.add(map[event.key]);
+          handleMovement();
+        }
+      }
+    }
+
+    function handleKeyUp(event) {
+      const map = {
+        'ArrowUp': 'forward',
+        'ArrowDown': 'backward',
+        'ArrowLeft': 'left',
+        'ArrowRight': 'right',
+        'a': 'ccw', 'A': 'ccw',
+        'd': 'cw', 'D': 'cw',
+        'h': 'horn', 'H': 'horn'
+      };
+
+      if (map[event.key]) {
+        if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(event.key)) {
+          event.preventDefault();
+        }
+
+        if (event.key.toLowerCase() === 'h') {
+          deactivateHorn();  // Add this line to handle horn release
+        } else {
+          keyboardActiveButtons.delete(map[event.key]);
+          keyboardActiveButtons.delete('_90turnExecuted');
+          handleMovement();
+        }
+      }
+    }
+
+
+    function adjustSpeed(change) {
+      const slider = document.getElementById("speedSlider");
+      let newValue = parseInt(slider.value) + change;
+      newValue = Math.max(parseInt(slider.min), Math.min(parseInt(slider.max), newValue));
+      slider.value = newValue;
+      updateSlider();
+      sendSpeed();
+    }
+
+    function updateSlider() {
+      const slider = document.getElementById("speedSlider");
+      const val = slider.value;
+      document.getElementById("sliderValue").innerText = `Speed: ${val}%`;
+      localStorage.setItem("speedValue", val);
+      sendSpeed(); // Call sendSpeed immediately on change
+    }
+
+
+    function sendSpeed() {
+      const val = parseInt(document.getElementById("speedSlider").value);
+      fetch(`/setpid?speed=${val}`)
+        .then(response => {
+          if (!response.ok) throw new Error("Network response was not ok");
+          console.log("Speed updated successfully");
+        })
+        .catch(error => {
+          console.error("Error updating speed:", error);
+          document.getElementById("sliderValue").style.color = "red";
+          setTimeout(() => {
+            document.getElementById("sliderValue").style.color = "";
+          }, 1000);
+        });
+    }
+
+
+    function activateHorn() {
+      hornActive = true;
+      activeButtons.add('horn');
+      fetch("/horn?state=on").catch(console.error);
+      updateButtonAppearance();
+    }
+
+    function deactivateHorn() {
+      hornActive = false;
+      activeButtons.delete('horn');
+      fetch("/horn?state=off").catch(console.error);
+      updateButtonAppearance();
+    }
+
+    function touchHorn(event, state) {
+      event.preventDefault();
+      if (state) {
+        activateHorn();
+      } else {
+        deactivateHorn();
+      }
+    }
+
+    function loadSpeedFromStorage() {
+      const stored = localStorage.getItem("speedValue");
+      if (stored) {
+        const slider = document.getElementById("speedSlider");
+        slider.value = stored;
+        document.getElementById("sliderValue").innerText = `Speed: ${stored}%`;
+      }
+    }
+  </script>
 </body>
+
 </html>
